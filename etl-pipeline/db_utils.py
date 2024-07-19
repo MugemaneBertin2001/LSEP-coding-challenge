@@ -1,7 +1,8 @@
 import psycopg2
-from psycopg2 import OperationalError
 
-# Function to create tables
+
+
+
 def create_tables(conn):
     commands = (
         """
@@ -82,7 +83,7 @@ def connect_to_db(db_config):
             port=db_config['port']
         )
         return conn
-    except OperationalError as e:
+    except psycopg2.OperationalError as e:
         print(f"Error connecting to the database: {e}")
         return None
 

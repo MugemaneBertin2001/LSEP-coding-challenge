@@ -1,11 +1,12 @@
+import os
 from config import DB_CONFIG
-from db_utils import connect_to_db, create_tables, reconnect_if_closed
+from db_utils import connect_to_db, create_tables
 from etl_extract import extract_from_json
 from etl_transform import transform_data
 from etl_load import load_users, load_tweets, load_tweet_hashtags, load_tweet_urls
 
 def main():
-    file_path = 'D:\query2_ref.json'  
+    file_path = os.path.join('D:/', 'query2_ref.json') 
     extracted_data = extract_from_json(file_path)
     
     if extracted_data is None:
