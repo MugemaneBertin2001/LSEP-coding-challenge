@@ -96,7 +96,7 @@ welcome message
 GET /run_etl
 
 ```
-This end point will return msg after reloading data into db
+This end point will return success confirmation message after loading data into db.
 
 ### Query Tweets
 ```
