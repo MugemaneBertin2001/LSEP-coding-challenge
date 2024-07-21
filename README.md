@@ -115,4 +115,4 @@ Queries tweets based on user_id, type, phrase, and hashtag. Any of these paramet
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
-For any inquiries or support, please contact [bertin.m2001@gmail.com].
+For any inquiries or support, please contact [bertin.m2001@gmail.com](bertin.m2001@gmail.com).
