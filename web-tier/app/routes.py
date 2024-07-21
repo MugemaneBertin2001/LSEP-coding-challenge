@@ -1,3 +1,6 @@
+import os
+import re
+import sys
 from flask import Blueprint, request, jsonify
 import subprocess
 from psycopg2 import extras
@@ -14,7 +17,10 @@ def index():
 @main.route('/run_etl', methods=['GET'])
 def run_etl():
     try:
-        result = subprocess.run(['py', '.././etl-pipeline/app.py'], capture_output=True, text=True)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        script_path = os.path.join(current_dir, '..', '..', 'etl-pipeline', 'app.py')
+        python_executable = sys.executable
+        result = subprocess.run([python_executable, script_path], capture_output=True, text=True)
         if result.returncode != 0:
             return jsonify({"error": result.stderr}), 500
         return jsonify({"message": "ETL process completed successfully!"})
@@ -28,6 +34,7 @@ def get_tweets():
     user_id = request.args.get('user_id')
     phrase = request.args.get('phrase')
     hashtag = request.args.get('hashtag')
+    tweet_type = request.args.get('type') 
 
     query = """
         SELECT 
@@ -65,6 +72,7 @@ def get_tweets():
         LEFT JOIN 
             tweet_urls tu ON t.tweet_id = tu.tweet_id
     """
+    
     conditions = []
     params = []
 
@@ -85,12 +93,33 @@ def get_tweets():
     
     query += " GROUP BY t.tweet_id, u.user_id;"
 
-    conn = connect_to_db(DB_CONFIG)
-    cursor = conn.cursor(cursor_factory=extras.DictCursor)
-    cursor.execute(query, params)
-    rows = cursor.fetchall()
-    cursor.close()
-    conn.close()
+    try:
+        conn = connect_to_db(DB_CONFIG)
+        cursor = conn.cursor(cursor_factory=extras.DictCursor)
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        
+        tweets = [dict(row) for row in rows]
+        
+        if tweet_type:
+            if tweet_type == 'reply':
+                tweets = [tweet for tweet in tweets if tweet['in_reply_to_status_id'] is not None]
+            elif tweet_type == 'retweet':
+                tweets = [tweet for tweet in tweets if tweet['tweet_text'].startswith('RT @')]
+            elif tweet_type == 'both':
+                tweets = [tweet for tweet in tweets if tweet['in_reply_to_status_id'] is not None and tweet['tweet_text'].startswith('RT @')]
 
-    tweets = [dict(row) for row in rows]
-    return jsonify(tweets)
+        if phrase:
+            pattern = re.compile(re.escape(phrase))
+            for tweet in tweets:
+                tweet_text = tweet.get('tweet_text', '')
+                matches = list(pattern.finditer(tweet_text))
+                tweet['phrase_matches'] = len(matches)
+        
+        return jsonify(tweets)
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An error occurred while retrieving tweets."+ e}), 500

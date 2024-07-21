@@ -1,3 +1,5 @@
+import os
+
 DB_CONFIG = {
     'dbname': 'tweeter_etl',
     'user': 'postgres',

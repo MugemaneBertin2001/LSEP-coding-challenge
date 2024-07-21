@@ -1,5 +1,7 @@
 import psycopg2
 
+import os
+
 DB_CONFIG = {
     'dbname': 'tweeter_etl',
     'user': 'postgres',
@@ -7,6 +9,7 @@ DB_CONFIG = {
     'host': 'localhost',
     'port': 7777,
 }
+
 
 def connect_to_db(db_config):
     try:

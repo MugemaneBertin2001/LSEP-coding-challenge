@@ -6,7 +6,10 @@ from etl_transform import transform_data
 from etl_load import load_users, load_tweets, load_tweet_hashtags, load_tweet_urls
 
 def main():
-    file_path = os.path.join('D:/', 'query2_ref.json') 
+    current_directory = os.getcwd()
+    dataset_directory = os.path.join(current_directory, '..', 'LSEP-coding-challenge','dataset')
+    dataset_directory = os.path.normpath(dataset_directory)
+    file_path = os.path.join(dataset_directory, 'query2_ref.json')
     extracted_data = extract_from_json(file_path)
     
     if extracted_data is None:
