@@ -1,7 +1,7 @@
 # LSEP-coding-challenge
 
 ## Overview
-This project is 2 tier application namely; an ETL (Extract, Transform, Load) pipeline designed to process and load tweet data into a PostgreSQL database. The pipeline includes modules for extracting data from a JSON file, transforming it, and loading it into the database. Additionally, additianally there is a Flask-based web tier to interact with the data.
+This project is 2 tier application namely; an ETL (Extract, Transform, Load) pipeline designed to process and load tweet data into a PostgreSQL database. The pipeline includes modules for extracting data from a JSON file, transforming it, and loading it into the database. Additionally, there is a Flask-based web tier to interact with the data.
 
 ## Project Structure
 ```
