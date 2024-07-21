@@ -115,8 +115,4 @@ Queries tweets based on user_id, type, phrase, and hashtag. Any of these paramet
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
-For any inquiries or support, please contact [yourname@yourdomain.com].
-
-
-
-This `README.md` file provides a comprehensive guide for setting up and using the ETL pipeline, including project structure, setup steps, API endpoints, and additional notes. Adjust any placeholders like `yourusername`, `yourdbname`, `yourdbuser`, `yourdbpassword`, and contact information as needed.
+For any inquiries or support, please contact [bertin.m2001@gmail.com].
