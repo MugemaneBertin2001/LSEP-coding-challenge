@@ -111,6 +111,10 @@ Queries tweets based on user_id, type, phrase, and hashtag. Any of these paramet
   file_path = os.path.join('D:', 'query2_ref.json')  # Modify as needed
   ```
 
+  ## Sample screen shot for testing endpoints
+  ![Screenshot 2024-07-23 015758](https://github.com/user-attachments/assets/54720ccd-77e2-411c-8dee-d715e22a903c)
+
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
